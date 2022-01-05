@@ -25,8 +25,8 @@ def main(input_filepath, output_filepath):
     train_images = np.concatenate(list(map(lambda l: np.load(l)['images'], train_files)), 0)
     test_images = np.load(test_files[0])['images']
 
-    train_images = train_images.reshape((25000, 784))
-    test_images = test_images.reshape((5000, 784))
+    train_images = train_images.reshape((-1, 784))
+    test_images = test_images.reshape((-1, 784))
 
     train_labels = np.concatenate(list(map(lambda l: np.load(l)['labels'], train_files)), 0)
     test_labels = np.load(test_files[0])['labels']
