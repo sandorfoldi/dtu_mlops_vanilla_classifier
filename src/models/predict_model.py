@@ -2,37 +2,52 @@ import sys
 import argparse
 import torch
 from torch.utils.data import TensorDataset, DataLoader
+import cv2
+import glob
+import numpy as np
 
 
 def main():
-    print("Evaluating until hitting the ceiling")
-    parser = argparse.ArgumentParser(description="Training arguments")
-    parser.add_argument("--x", default="data/processed/test_imgs_tensor.pt")
-    parser.add_argument("--y", default="data/processed/test_labels_tensor.pt")
-    parser.add_argument("--m", default="models/checkpoints/model_0.pt")
+    print("Prediction running")
+    parser = argparse.ArgumentParser(description="Arguments")
+    parser.add_argument("x", help="folder or pt file")
+    parser.add_argument("m", help=" i.e. models/checkpoints/model_0.pt")
 
-    args = parser.parse_args(sys.argv[2:])
+    args = parser.parse_args()
 
     model = torch.load(args.m)
+    if args.x[-3:] == '.pt':
+        tensor_x = torch.load(args.x)
 
-    tensor_x = torch.load(args.x)
-    tensor_y = torch.load(args.y)
+        ps = torch.exp(model(tensor_x))
+        top_p, top_class = ps.topk(1, dim=1)
 
-    my_dataset = TensorDataset(tensor_x, tensor_y)
-    my_dataloader = DataLoader(my_dataset, batch_size=64)
-    with torch.no_grad():
-        # set model to evaluation mode
-        model.eval()
+        print(top_class)
+    else:
+        img_paths = glob.glob(args.x+'/*.png')
+        print(len(img_paths))
+        img_list = []
+        for img_path in img_paths:
+            img = cv2.imread(img_path)
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            img = cv2.resize(img, (28, 28))
+            
+            img = np.array(img, dtype=np.float32)
+            img = (img - img.mean()) / img.var()
 
-        # validation pass here
-        running_accuracy = 0
-        for images, labels in my_dataloader:
-            ps = torch.exp(model(images))
-            top_p, top_class = ps.topk(1, dim=1)
-            equals = top_class == labels.view(*top_class.shape)
-            accuracy = torch.mean(equals.type(torch.FloatTensor))
-            running_accuracy += accuracy.item()
-        print(running_accuracy * 100 / len(my_dataloader))
+            img_list.append(img.reshape(1, -1))
+        img_arr = np.concatenate(img_list, 0)
+        tensor_x = torch.from_numpy(img_arr)
+        print(tensor_x)
+
+        ps = torch.exp(model(tensor_x))
+        top_p, top_class = ps.topk(1, dim=1)
+
+        print(top_class)
+
+        
+        
+
 
 
 if __name__ == "__main__":
