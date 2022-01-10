@@ -1,11 +1,9 @@
 import argparse
 import glob
-import sys
 
 import cv2
 import numpy as np
 import torch
-from torch.utils.data import DataLoader, TensorDataset
 
 
 def main():
@@ -32,7 +30,7 @@ def main():
             img = cv2.imread(img_path)
             img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
             img = cv2.resize(img, (28, 28))
-            
+
             img = np.array(img, dtype=np.float32)
             img = (img - img.mean()) / img.var()
 
@@ -45,10 +43,6 @@ def main():
         top_p, top_class = ps.topk(1, dim=1)
 
         print(top_class)
-
-        
-        
-
 
 
 if __name__ == "__main__":

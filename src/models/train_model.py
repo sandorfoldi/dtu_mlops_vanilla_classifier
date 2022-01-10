@@ -40,7 +40,7 @@ def main():
 
         for images, labels in my_dataloader:
             optimizer.zero_grad()
-            
+
             loss = criterion(model(images), labels)
 
             ps = torch.exp(model(images))
@@ -48,7 +48,6 @@ def main():
             equals = top_class == labels.view(*top_class.shape)
             accuracy = torch.mean(equals.type(torch.FloatTensor))
             running_accuracy += accuracy.item()
-
 
             loss.backward()
             optimizer.step()
