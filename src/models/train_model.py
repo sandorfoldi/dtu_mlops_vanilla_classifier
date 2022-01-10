@@ -1,11 +1,13 @@
 import argparse
 import sys
+
+import matplotlib.pyplot as plt
 import torch
 from torch import nn, optim
+from torch.utils.data import DataLoader, TensorDataset
+
 # from models.model_0 import MyAwesomeModel
 from src.models.model_0 import MyAwesomeModel
-from torch.utils.data import TensorDataset, DataLoader
-import matplotlib.pyplot as plt
 
 
 def main():

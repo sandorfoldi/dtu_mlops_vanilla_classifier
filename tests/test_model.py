@@ -1,6 +1,6 @@
-from src.models.model_0 import MyAwesomeModel
 import torch
 
+from src.models.model_0 import MyAwesomeModel
 
 model = MyAwesomeModel()
 input_tensor = torch.rand([1, 784])

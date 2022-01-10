@@ -1,10 +1,11 @@
-import torch
-import pytest
 import os.path
 
-from src.models.model_0 import MyAwesomeModel
+import pytest
+import torch
 from torch import nn
-from torch.utils.data import TensorDataset, DataLoader
+from torch.utils.data import DataLoader, TensorDataset
+
+from src.models.model_0 import MyAwesomeModel
 
 data_path = 'data/processed/train_imgs_tensor.pt'
 

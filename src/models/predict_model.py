@@ -1,10 +1,11 @@
-import sys
 import argparse
-import torch
-from torch.utils.data import TensorDataset, DataLoader
-import cv2
 import glob
+import sys
+
+import cv2
 import numpy as np
+import torch
+from torch.utils.data import DataLoader, TensorDataset
 
 
 def main():

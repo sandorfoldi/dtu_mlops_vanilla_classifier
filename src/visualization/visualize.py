@@ -1,8 +1,9 @@
-import torch
 import argparse
-from sklearn.manifold import TSNE
-import matplotlib.pyplot as plt
 import sys
+
+import matplotlib.pyplot as plt
+import torch
+from sklearn.manifold import TSNE
 
 
 def main():

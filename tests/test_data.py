@@ -1,6 +1,7 @@
-import torch
-import pytest
 import os
+
+import pytest
+import torch
 
 data_path = 'data/processed/train_imgs_tensor.pt'
 

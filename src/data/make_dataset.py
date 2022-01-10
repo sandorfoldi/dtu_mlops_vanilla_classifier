@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
-import click
-import logging
-from pathlib import Path
-from dotenv import find_dotenv, load_dotenv
-import torch
-import os
 import glob
-import numpy as np
+import logging
+import os
 import os.path
 import sys
+from pathlib import Path
 
+import click
+import numpy as np
+import torch
+from dotenv import find_dotenv, load_dotenv
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
