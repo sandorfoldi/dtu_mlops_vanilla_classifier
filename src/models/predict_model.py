@@ -11,7 +11,7 @@ def main():
     print("Prediction running")
     parser = argparse.ArgumentParser(description="Arguments")
     parser.add_argument("x", help="folder or pt file")
-    parser.add_argument("m", help=" i.e. models/checkpoints/model_0.pt")
+    parser.add_argument("m", help=" i.e. models/model_0.pt")
 
     args = parser.parse_args()
 

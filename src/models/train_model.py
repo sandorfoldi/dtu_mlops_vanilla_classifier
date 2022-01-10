@@ -2,7 +2,8 @@ import argparse
 import sys
 import torch
 from torch import nn, optim
-from models.model_0 import MyAwesomeModel
+# from models.model_0 import MyAwesomeModel
+from src.models.model_0 import MyAwesomeModel
 from torch.utils.data import TensorDataset, DataLoader
 import matplotlib.pyplot as plt
 
@@ -33,19 +34,30 @@ def main():
 
     for e in range(args.e):
         running_loss = 0
+        running_accuracy = 0
+
         for images, labels in my_dataloader:
             optimizer.zero_grad()
 
             loss = criterion(model(images), labels)
-            # print(loss)
+
+            ps = torch.exp(model(images))
+            top_p, top_class = ps.topk(1, dim=1)
+            equals = top_class == labels.view(*top_class.shape)
+            accuracy = torch.mean(equals.type(torch.FloatTensor))
+            running_accuracy += accuracy.item()
+
+
             loss.backward()
             optimizer.step()
             running_loss += loss.item()
         print(f'loss: {running_loss/len(my_dataloader)}')
+        print(f'accuracy: {running_accuracy * 100 / len(my_dataloader)}')
+
         losses.append(running_loss)
 
     # torch.save(model.state_dict(), 'checkpoint.pth')
-    torch.save(model, 'models/checkpoints/model_0.pt')
+    torch.save(model, 'models/model_0.pt')
     plt.plot(losses)
     plt.savefig('reports/figures/fig_0.png')
 

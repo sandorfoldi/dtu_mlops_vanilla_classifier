@@ -7,7 +7,7 @@ import sys
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--m', default='models/checkpoints/model_0.pt')
+    parser.add_argument('--m', default='models/model_0.pt')
     parser.add_argument('--x', default='data/processed/train_imgs_tensor.pt')
     parser.add_argument('--i', default=0)
     args = parser.parse_args(sys.argv[2:])
