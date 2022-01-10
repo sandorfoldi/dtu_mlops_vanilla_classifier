@@ -1,4 +1,5 @@
 from torch import nn
+import torch
 
 
 class MyAwesomeModel(nn.Module):
@@ -9,6 +10,8 @@ class MyAwesomeModel(nn.Module):
         self.l3 = nn.Linear(128, 10)
 
     def forward(self, x):
+        if x.shape[1] != 784:
+            raise ValueError('hababla')
         x = self.l1(x)
         x = nn.ReLU()(x)
         x = self.l2(x)

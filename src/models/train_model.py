@@ -38,7 +38,7 @@ def main():
 
         for images, labels in my_dataloader:
             optimizer.zero_grad()
-
+            
             loss = criterion(model(images), labels)
 
             ps = torch.exp(model(images))
