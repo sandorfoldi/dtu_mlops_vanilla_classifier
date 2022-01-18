@@ -22,7 +22,7 @@ RUN apt update && \
     apt install -y wget &&\
     apt clean && rm -rf /var/lib/apt/lists/*
 # Installs pytorch and torchvision.
-RUN pip install torch==1.0.0 torchvision==0.2.1
+# RUN pip install torch==1.0.0 torchvision==0.2.1
 
 # Installs cloudml-hypertune for hyperparameter tuning.
 # It’s not needed if you don’t want to do hyperparameter tuning.
@@ -49,7 +49,14 @@ RUN echo '[GoogleCompute]\nservice_account = default' > /etc/boto.cfg
 
 # Copies the trainer code 
 # RUN mkdir /root/trainer
-# COPY trainer/mnist.py /root/trainer/mnist.py
+# COPY requirements.txt requirements.txt
+# COPY setup.py setup.py
+# OPY requirements.txt /.
+# COPY setup.py /.
+
+# COPY src/ src/
+# COPY data/ data/
+
 COPY ./ /
 
 WORKDIR /
